@@ -1,9 +1,6 @@
 import boto3
 from utils import generate_url
 from boto3.dynamodb.conditions import Key
-from dotenv import load_dotenv
-import os
-
 
 class DB():
     def __init__(self, access_key, secret_access_key):

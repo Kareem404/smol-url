@@ -1,2 +1,3 @@
 fastapi[standard] # install fastapi, pydantic, and uvicorn
 boto3[crt]
+redis[hiredis]
