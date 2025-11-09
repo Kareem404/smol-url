@@ -70,12 +70,3 @@ class DB():
                 return entry[0]['long_url']
         except Exception as e:
             print(e)
-
-load_dotenv() 
-access_key = os.getenv('ACCESS_KEY')
-secret_access_key = os.getenv('SECRET_ACCESS_KEY')
-
-# load database connectivity object
-db = DB(access_key=access_key, secret_access_key=secret_access_key)
-
-db.add_long_url(long_url="https://fastapi.tiangolo.com/tutorial/body/#request-body-path-parameters")
