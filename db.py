@@ -16,7 +16,7 @@ class DB():
 
         self.table = dynamodb.Table('short-URLs')
 
-    def add_long_url(self, long_url):
+    def add_long_url(self, long_url: str) -> str:
         """
         Function that adds a short URL in the database
         args:-
@@ -45,7 +45,12 @@ class DB():
                 print("key may already exist")
 
 
-    def update_clicks(self, short_url):
+    def update_clicks(self, short_url: str) -> None:
+        """
+        Function that updates the the number of clicks for a URL
+        Args:
+            - short_url(str): the generated URL from the system
+        """
         try:
             response = self.table.update_item(
                 Key = {"short_url": short_url}, 
@@ -56,7 +61,12 @@ class DB():
             print(err)
         print(f"Updated {short_url} clicks successfully")
 
-    def get_long_url(self, short_url):
+    def get_long_url(self, short_url: str) -> str:
+        """
+        Function that returns the long_url
+        Args:
+            - short_url(str): the generated URL from the system
+        """
         try:
             response = self.table.query(KeyConditionExpression=Key('short_url').eq(short_url))
             entry = response['Items']
