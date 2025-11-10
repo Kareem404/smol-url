@@ -11,8 +11,11 @@ def cache_url(short_url: str, long_url: str) -> None:
     Returns:
         - None
     """
-    r.setex(name=short_url, value=long_url, time=3600) # expires in an hour
-    print(f"added {short_url} to cache")
+    try:
+        r.setex(name=short_url, value=long_url, time=3600) # expires in an hour
+        print(f"added {short_url} to cache")
+    except Exception as e:
+        print("unable to cache")
 
 def check_cache(shorturl: str) -> None | str:
     """
@@ -23,6 +26,9 @@ def check_cache(shorturl: str) -> None | str:
         - None (if URL is not cached)
         - str (string representing the long_url)
     """
-    return r.get(shorturl)
+    try:
+        return r.get(shorturl)
+    except Exception as e:
+        return None 
 
 # docker run -t --name redis-container -p 6379:6379 redis:8.2.3
