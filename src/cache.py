@@ -1,6 +1,7 @@
 import redis
 
-r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+r = redis.Redis(host='172.17.0.1', port=6379, decode_responses=True)
+# 172.17.0.1 is the default IP address assigned to the docker0 bridge interface within the host machine's network
 
 def cache_url(short_url: str, long_url: str) -> None:
     """
@@ -32,3 +33,4 @@ def check_cache(shorturl: str) -> None | str:
         return None 
 
 # docker run -t --name redis-container -p 6379:6379 redis:8.2.3
+# docker start -t redis-container

@@ -4,6 +4,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+from fastapi.middleware.cors import CORSMiddleware
 from utils import generate_url
 from base_models import URL
 from dotenv import load_dotenv
@@ -18,6 +19,13 @@ secret_access_key = os.getenv('SECRET_ACCESS_KEY')
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
@@ -71,3 +79,9 @@ def add_url(request: Request, response: Response, url: URL):
 
 if __name__ == "__main__":
     uvicorn.run(app=app, port=8001) # run in port 8001 using uvicorn
+
+# fastapi run .\src\app.py --port 8001
+
+
+# docker build -t karim129/smol-url .
+# docker run -t --name smol-url-app -p 8001:80 karim129/smol-url
