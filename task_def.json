@@ -1,0 +1,35 @@
+{
+  "family": "smol-url-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "FastAPI-App",
+      "image": "[repositoryUri]",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "ACCESS_KEY", "value": "your_access_key" },
+        { "name": "SECRET_ACCESS_KEY", "value": "your_secret_access_key" }
+      ]
+    },
+    {
+      "name": "redis",
+      "image": "redis:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 6379,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ]
+}
